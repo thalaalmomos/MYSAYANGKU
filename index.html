@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>THALAAL ❤️ AMIRA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+
+</head>
+
+<body>
+
+<div id="intro">
+<h1 id="introText"></h1>
+<button id="enterBtn" onclick="startApp()">Open Your Surprise ❤️</button>
+</div>
+
+<audio id="music" loop preload="auto">
+<source src="music/love-song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="app">
+
+<h1>THALAAL ❤️ AMIRA</h1>
+
+<div class="tabs">
+<button onclick="show('home')">Home</button>
+<button onclick="show('reasons')">Reasons</button>
+<button onclick="show('memory')">Match Game</button>
+<button onclick="show('game')">Game</button>
+<button onclick="show('gift')">Gift</button>
+<button onclick="show('forever')">Forever</button>
+</div>
+
+<div id="home" class="section active">
+<p>You make my world brighter every single day.</p>
+<p class="timer">We have been together for</p>
+<p id="days" class="timer"></p>
+</div>
+
+<div id="reasons" class="section">
+<p class="reason" id="reasonText">
+Click below to see why I love you 💖
+</p>
+<button onclick="newReason()">Show Reason</button>
+</div>
+
+<!-- MEMORY GAME -->
+
+<div id="memory" class="section">
+
+<p>Match Our Memories ❤️</p>
+
+<div id="memoryBoard"></div>
+
+<button onclick="startMemoryGame()">Restart Game</button>
+
+<p id="memoryMessage"></p>
+
+</div>
+
+<div id="game" class="section">
+<p>Tap the heart!</p>
+<h2 id="score">0</h2>
+<button onclick="addPoint()">❤️</button>
+</div>
+
+<div id="gift" class="section">
+<p>Tap the gift 🎁</p>
+<div class="gift" onclick="loveExplosion()">🎁</div>
+</div>
+
+<div id="forever" class="section">
+<h2>Will you be my forever? 💍</h2>
+<button onclick="answerYes()">YES ❤️</button>
+<button onmouseover="moveNo(this)" onclick="moveNo(this)">No</button>
+</div>
+
+</div>
+
+</body>
+</html>
