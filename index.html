@@ -2,11 +2,10 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>THALAAL  ❤️  AMIRA</title>
+<title>THALAAL ❤️ AMIRA</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
@@ -86,6 +85,24 @@ color:#ff4d6d;
 margin-bottom:10px;
 }
 
+/* MUSIC PLAYER */
+
+.music-player{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+margin-bottom:10px;
+font-size:14px;
+}
+
+.music-player button{
+padding:4px 10px;
+border-radius:10px;
+}
+
+/* NAV */
+
 .tabs{
 display:flex;
 flex-wrap:wrap;
@@ -127,17 +144,23 @@ font-size:18px;
 margin:10px 0;
 }
 
+/* HEARTS */
+
 .heart{
 position:absolute;
 font-size:24px;
 color:#ff4d6d;
+pointer-events:none;
+transition:transform 0.1s linear;
 animation:float 6s linear forwards;
 }
 
 @keyframes float{
 from{transform:translateY(0)}
-to{transform:translateY(-100vh)}
+to{transform:translateY(-110vh)}
 }
+
+/* GIFT */
 
 .gift{
 font-size:80px;
@@ -185,58 +208,52 @@ display:block;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div id="intro">
 <h1 id="introText"></h1>
-<button id="enterBtn" onclick="startApp()">Open Your Surprise ❤️</button>
+<button id="enterBtn" onclick="startApp()">Here's a little surprise to My Sayang ❤️</button>
 </div>
 
-<audio id="music" loop preload="auto">
-<source src="music/love-song.mp3" type="audio/mpeg">
-</audio>
+<audio id="music" loop></audio>
 
 <div class="app">
 
 <h1>THALAAL ❤️ AMIRA</h1>
 
+<div class="music-player">
+<button onclick="prevSong()">⏮</button>
+<span id="songTitle">Song 1</span>
+<button onclick="nextSong()">⏭</button>
+</div>
+
 <div class="tabs">
 <button onclick="show('home')">Home</button>
 <button onclick="show('reasons')">Reasons</button>
-<button onclick="show('memory')">Match Game</button>
-<button onclick="show('game')">Game</button>
+<button onclick="show('memory')">Matching Cute Pics</button>
+<button onclick="show('game')">Infinite Hearts</button>
 <button onclick="show('gift')">Gift</button>
 <button onclick="show('forever')">Forever</button>
 </div>
 
 <div id="home" class="section active">
-<p>You make my world brighter every single day.</p>
+<p>You make my world brighter every single day, and I have never been more happier in life.</p>
 <p class="timer">We have been together for</p>
 <p id="days" class="timer"></p>
 </div>
 
 <div id="reasons" class="section">
-<p class="reason" id="reasonText">
-Click below to see why I love you 💖
-</p>
-<button onclick="newReason()">Show Reason</button>
+<p class="reason" id="reasonText">Why I love you 💖</p>
+<button onclick="newReason()">Hehehehe</button>
 </div>
 
-<!-- MEMORY GAME -->
-
 <div id="memory" class="section">
-
 <p>Match Our Memories ❤️</p>
-
 <div id="memoryBoard"></div>
-
 <button onclick="startMemoryGame()">Restart Game</button>
-
 <p id="memoryMessage"></p>
-
 </div>
 
 <div id="game" class="section">
@@ -246,7 +263,7 @@ Click below to see why I love you 💖
 </div>
 
 <div id="gift" class="section">
-<p>Tap the gift 🎁</p>
+<p>Click on this Baby 🎁</p>
 <div class="gift" onclick="loveExplosion()">🎁</div>
 </div>
 
@@ -262,7 +279,7 @@ Click below to see why I love you 💖
 
 /* INTRO */
 
-const introMessage="Hi Amira... I made something special for you ❤️";
+const introMessage="Sayangku I have made something special for you ❤️";
 let i=0;
 
 function typeIntro(){
@@ -280,6 +297,8 @@ function startApp(){
 document.getElementById("intro").style.display="none";
 }
 
+/* NAV */
+
 function show(id){
 document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
@@ -291,13 +310,11 @@ let reasons=[
 "I love your smile",
 "I love your laugh",
 "I love your kindness",
-"I love your hugs",
-"I love how you make me happy",
-"I love your beautiful eyes",
-"I love your voice",
-"I love spending time with you",
-"I love your personality",
-"I love everything about you ❤️"
+"I love how you make me happy everytime just by existing",
+"I love your beautiful eyes which pierces through my heart",
+"I love your voice which is a blessing to my ears",
+"I love spending time with you even if it's the last few seconds on earth",
+"I love everything about you My Sayangku ❤️"
 ];
 
 let usedReasons=[];
@@ -305,7 +322,7 @@ let usedReasons=[];
 function newReason(){
 
 if(usedReasons.length===reasons.length){
-document.getElementById("reasonText").innerText="That's all the reasons... but I could list thousands more ❤️";
+document.getElementById("reasonText").innerText="These are not all of the reasons... I could list thousands more ❤️";
 return;
 }
 
@@ -320,7 +337,58 @@ usedReasons.push(index);
 document.getElementById("reasonText").innerText=reasons[index];
 }
 
-/* HEART ANIMATION */
+/* MUSIC PLAYER */
+
+const songs=[
+"music/song1.mp3",
+"music/song2.mp3",
+"music/song3.mp3"
+];
+
+let currentSong=0;
+const music=document.getElementById("music");
+const title=document.getElementById("songTitle");
+
+function loadSong(){
+music.src=songs[currentSong];
+title.innerText="Song "+(currentSong+1);
+}
+
+function nextSong(){
+currentSong=(currentSong+1)%songs.length;
+loadSong();
+music.play();
+}
+
+function prevSong(){
+currentSong=(currentSong-1+songs.length)%songs.length;
+loadSong();
+music.play();
+}
+
+function startMusic(){
+loadSong();
+music.volume=0;
+music.play();
+let fade=setInterval(()=>{
+if(music.volume<0.6){music.volume+=0.05;}
+else clearInterval(fade);
+},200);
+}
+
+document.addEventListener("click",startMusic,{once:true});
+
+/* MUSIC REACTIVE HEARTS */
+
+const audioContext=new (window.AudioContext||window.webkitAudioContext)();
+const analyser=audioContext.createAnalyser();
+const source=audioContext.createMediaElementSource(music);
+
+source.connect(analyser);
+analyser.connect(audioContext.destination);
+
+analyser.fftSize=256;
+const dataArray=new Uint8Array(analyser.frequencyBinCount);
 
 function createHeart(){
 const heart=document.createElement("div");
@@ -332,66 +400,22 @@ document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),6000);
 }
 
-setInterval(createHeart,800);
+setInterval(createHeart,600);
 
-/* GIFT */
+function animateHearts(){
 
-function loveExplosion(){
-for(let i=0;i<80;i++){
-setTimeout(createHeart,i*40);
-}
-alert("You are the best thing in my life ❤️");
-}
+analyser.getByteFrequencyData(dataArray);
+let volume=dataArray.reduce((a,b)=>a+b)/dataArray.length;
 
-/* HEART CLICK GAME */
+document.querySelectorAll(".heart").forEach(h=>{
+let scale=1+volume/200;
+h.style.transform=`translateY(-${volume/5}px) scale(${scale})`;
+});
 
-let score=0;
-
-function addPoint(){
-score++;
-document.getElementById("score").innerText=score;
+requestAnimationFrame(animateHearts);
 }
 
-/* FOREVER */
-
-function answerYes(){
-loveExplosion();
-alert("THALAAL ❤️ AMIRA forever!");
-}
-
-function moveNo(btn){
-const app=document.querySelector(".app");
-const maxX=app.clientWidth-btn.offsetWidth-20;
-const maxY=app.clientHeight-btn.offsetHeight-20;
-btn.style.position="absolute";
-btn.style.left=Math.random()*maxX+"px";
-btn.style.top=Math.random()*maxY+"px";
-}
-
-/* TIMER */
-
-const startDate=new Date("2025-12-20");
-const today=new Date();
-const diff=Math.floor((today-startDate)/(1000*60*60*24));
-document.getElementById("days").innerText=diff+" days ❤️";
-
-/* MUSIC */
-
-const music=document.getElementById("music");
-
-function startMusic(){
-music.volume=0;
-music.play().catch(()=>{});
-let fade=setInterval(()=>{
-if(music.volume<0.6){
-music.volume+=0.05;
-}else{
-clearInterval(fade);
-}
-},200);
-}
-
-document.addEventListener("click",startMusic,{once:true});
+animateHearts();
 
 /* MEMORY GAME */
 
@@ -420,7 +444,7 @@ cards.sort(()=>0.5-Math.random());
 matches=0;
 flipped=[];
 
-cards.forEach((img)=>{
+cards.forEach(img=>{
 
 const card=document.createElement("div");
 card.className="card";
@@ -440,7 +464,7 @@ board.appendChild(card);
 
 function flipCard(card,img){
 
-if(card.classList.contains("flipped") || flipped.length===2) return;
+if(card.classList.contains("flipped")||flipped.length===2) return;
 
 card.classList.add("flipped");
 flipped.push({card,img});
@@ -453,7 +477,7 @@ matches++;
 flipped=[];
 
 if(matches===6){
-document.getElementById("memoryMessage").innerText="You matched all our memories ❤️";
+document.getElementById("memoryMessage").innerText="You matched it yayyyyy ❤️";
 }
 
 }else{
@@ -472,7 +496,43 @@ flipped=[];
 
 startMemoryGame();
 
-</script>
+/* HEART CLICK GAME */
 
+let score=0;
+
+function addPoint(){
+score++;
+document.getElementById("score").innerText=score;
+}
+
+/* GIFT */
+
+function loveExplosion(){
+alert("You are the best thingto ever happen in my life and I can never be more thankful ❤️");
+}
+
+/* FOREVER */
+
+function answerYes(){
+alert("THALAAL ❤️ AMIRA forever!");
+}
+
+function moveNo(btn){
+const app=document.querySelector(".app");
+const maxX=app.clientWidth-btn.offsetWidth-20;
+const maxY=app.clientHeight-btn.offsetHeight-20;
+btn.style.position="absolute";
+btn.style.left=Math.random()*maxX+"px";
+btn.style.top=Math.random()*maxY+"px";
+}
+
+/* TIMER */
+
+const startDate=new Date("2025-12-20");
+const today=new Date();
+const diff=Math.floor((today-startDate)/(1000*60*60*24));
+document.getElementById("days").innerText=diff+" days ❤️";
+
+</script>
 </body>
 </html>
