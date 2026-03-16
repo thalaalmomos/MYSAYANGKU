@@ -85,24 +85,6 @@ color:#ff4d6d;
 margin-bottom:10px;
 }
 
-/* MUSIC PLAYER */
-
-.music-player{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:10px;
-margin-bottom:10px;
-font-size:14px;
-}
-
-.music-player button{
-padding:4px 10px;
-border-radius:10px;
-}
-
-/* NAV */
-
 .tabs{
 display:flex;
 flex-wrap:wrap;
@@ -144,8 +126,6 @@ font-size:18px;
 margin:10px 0;
 }
 
-/* HEARTS */
-
 .heart{
 position:absolute;
 font-size:24px;
@@ -160,8 +140,6 @@ from{transform:translateY(0)}
 to{transform:translateY(-110vh)}
 }
 
-/* GIFT */
-
 .gift{
 font-size:80px;
 cursor:pointer;
@@ -173,8 +151,6 @@ animation:pulse 1.5s infinite;
 50%{transform:scale(1.2)}
 100%{transform:scale(1)}
 }
-
-/* MEMORY GAME */
 
 #memoryBoard{
 width:320px;
@@ -217,17 +193,11 @@ display:block;
 <button id="enterBtn" onclick="startApp()">Here's a little surprise to My Sayang ❤️</button>
 </div>
 
-<audio id="music" loop></audio>
+<audio id="music" src="music/song1.mp3" loop></audio>
 
 <div class="app">
 
 <h1>THALAAL ❤️ AMIRA</h1>
-
-<div class="music-player">
-<button onclick="prevSong()">⏮</button>
-<span id="songTitle">Song 1</span>
-<button onclick="nextSong()">⏭</button>
-</div>
 
 <div class="tabs">
 <button onclick="show('home')">Home</button>
@@ -337,44 +307,29 @@ usedReasons.push(index);
 document.getElementById("reasonText").innerText=reasons[index];
 }
 
-/* MUSIC PLAYER */
+/* SINGLE SONG PLAYER */
 
-const songs=[
-"music/song1.mp3",
-];
-
-let currentSong=0;
-const music=document.getElementById("music");
-const title=document.getElementById("songTitle");
-
-function loadSong(){
-music.src=songs[currentSong];
-title.innerText="Song "+(currentSong+1);
-}
-
-function nextSong(){
-currentSong=(currentSong+1)%songs.length;
-loadSong();
-music.play();
-}
-
-function prevSong(){
-currentSong=(currentSong-1+songs.length)%songs.length;
-loadSong();
-music.play();
-}
+const music = document.getElementById("music");
 
 function startMusic(){
-loadSong();
-music.volume=0;
-music.play();
-let fade=setInterval(()=>{
-if(music.volume<0.6){music.volume+=0.05;}
-else clearInterval(fade);
-},200);
+
+music.volume = 0;
+
+music.play().catch(()=>{});
+
+let fade = setInterval(()=>{
+
+if(music.volume < 0.6){
+music.volume += 0.05;
+}else{
+clearInterval(fade);
 }
 
-document.addEventListener("click",startMusic,{once:true});
+},200);
+
+}
+
+document.addEventListener("click", startMusic, { once:true });
 
 /* MUSIC REACTIVE HEARTS */
 
@@ -401,7 +356,6 @@ setTimeout(()=>heart.remove(),6000);
 setInterval(createHeart,600);
 
 function animateHearts(){
-
 analyser.getByteFrequencyData(dataArray);
 let volume=dataArray.reduce((a,b)=>a+b)/dataArray.length;
 
@@ -506,7 +460,7 @@ document.getElementById("score").innerText=score;
 /* GIFT */
 
 function loveExplosion(){
-alert("You are the best thingto ever happen in my life and I can never be more thankful ❤️");
+alert("You are the best thing to ever happen in my life and I can never be more thankful ❤️");
 }
 
 /* FOREVER */
