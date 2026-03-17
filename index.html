@@ -316,15 +316,15 @@ let reasonIndex = 0;
 
 function newReason(){
 
-document.getElementById("reasonText").innerText = reasons[reasonIndex];
-
-reasonIndex++;
-
-if(reasonIndex >= reasons.length){
-reasonIndex = 0;
+if(reasonIndex < reasons.length){
+    document.getElementById("reasonText").innerText = reasons[reasonIndex];
+    reasonIndex++;
+} else {
+    document.getElementById("reasonText").innerText = "These are not all of the reasons... I could list thousands more ❤️";
 }
 
 }
+
 
 /* HEART GAME */
 let score=0;
