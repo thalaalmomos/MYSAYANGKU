@@ -316,14 +316,20 @@ let reasonIndex = 0;
 
 function newReason(){
 
-if(reasonIndex < reasons.length){
-    document.getElementById("reasonText").innerText = reasons[reasonIndex];
-    reasonIndex++;
-} else {
-    document.getElementById("reasonText").innerText = "These are not all of the reasons... I could list thousands more ❤️";
+if(reasonIndex >= reasons.length){
+    document.getElementById("reasonText").innerText =
+    "These are not all of the reasons... I could list thousands more ❤️";
+
+    return; // 🔥 THIS stops everything completely
 }
 
+document.getElementById("reasonText").innerText = reasons[reasonIndex];
+
+reasonIndex++;
+
 }
+
+
 
 
 /* HEART GAME */
