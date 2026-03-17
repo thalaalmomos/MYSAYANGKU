@@ -10,12 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Poppins,sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
 
 body{
 height:100vh;
@@ -51,10 +46,7 @@ z-index:10;
 padding:40px;
 }
 
-#introText{
-font-size:28px;
-margin-bottom:30px;
-}
+#introText{font-size:28px;margin-bottom:30px;}
 
 #enterBtn{
 padding:12px 22px;
@@ -79,10 +71,7 @@ z-index:5;
 position:relative;
 }
 
-h1{
-color:#ff4d6d;
-margin-bottom:10px;
-}
+h1{color:#ff4d6d;margin-bottom:10px;}
 
 .tabs{
 display:flex;
@@ -102,28 +91,13 @@ cursor:pointer;
 transition:.3s;
 }
 
-button:hover{
-transform:scale(1.08);
-}
+button:hover{transform:scale(1.08);}
 
-.section{
-display:none;
-margin-top:20px;
-}
+.section{display:none;margin-top:20px;}
+.active{display:block;}
 
-.active{
-display:block;
-}
-
-.timer{
-font-size:18px;
-margin-top:10px;
-}
-
-.reason{
-font-size:18px;
-margin:10px 0;
-}
+.timer{font-size:18px;margin-top:10px;}
+.reason{font-size:18px;margin:10px 0;}
 
 .heart{
 position:absolute;
@@ -149,6 +123,35 @@ animation:pulse 1.5s infinite;
 50%{transform:scale(1.2)}
 100%{transform:scale(1)}
 }
+
+#memoryBoard{
+width:320px;
+margin:20px auto;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+}
+
+.card{
+width:70px;
+height:70px;
+background:#ff4d6d;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+overflow:hidden;
+}
+
+.card img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:none;
+}
+
+.card.flipped img{display:block;}
 </style>
 </head>
 
@@ -162,39 +165,51 @@ animation:pulse 1.5s infinite;
 <audio id="music" src="music/song1.mp3"></audio>
 
 <div class="app">
+
 <h1>THALAAL ❤️ AMIRA</h1>
 
 <div class="tabs">
 <button onclick="show('home')">Home</button>
 <button onclick="show('reasons')">Reasons</button>
+<button onclick="show('memory')">Matching Cute Pics</button>
 <button onclick="show('game')">Infinite Hearts</button>
 <button onclick="show('gift')">Gift</button>
 <button onclick="show('forever')">Forever</button>
 </div>
 
 <div id="home" class="section active">
-<p>You make my world brighter every single day ❤️</p>
-<p id="days"></p>
+<p>You make my world brighter every single day, and I have never been more happier in life.</p>
+<p class="timer">We have been together for</p>
+<p id="days" class="timer"></p>
 </div>
 
 <div id="reasons" class="section">
-<p id="reasonText">Why I love you 💖</p>
+<p class="reason" id="reasonText">Why I love you 💖</p>
 <button onclick="newReason()">Hehehehe</button>
 </div>
 
+<div id="memory" class="section">
+<p>Match Our Memories ❤️</p>
+<div id="memoryBoard"></div>
+<button onclick="startMemoryGame()">Restart Game</button>
+<p id="memoryMessage"></p>
+</div>
+
 <div id="game" class="section">
+<p>Tap the heart!</p>
 <h2 id="score">0</h2>
 <button onclick="addPoint()">❤️</button>
 </div>
 
 <div id="gift" class="section">
+<p>Click on this Baby 🎁</p>
 <div class="gift" onclick="loveExplosion()">🎁</div>
 </div>
 
 <div id="forever" class="section">
 <h2>Will you be my forever? 💍</h2>
 <button onclick="answerYes()">YES ❤️</button>
-<button onmouseover="moveNo(this)">No</button>
+<button onmouseover="moveNo(this)" onclick="moveNo(this)">No</button>
 </div>
 
 </div>
@@ -204,7 +219,6 @@ animation:pulse 1.5s infinite;
 /* INTRO */
 const introMessage="Sayangku I have made something special for you ❤️";
 let i=0;
-
 function typeIntro(){
 if(i<introMessage.length){
 document.getElementById("introText").innerHTML+=introMessage.charAt(i);
@@ -212,24 +226,20 @@ i++;
 setTimeout(typeIntro,60);
 }else{
 document.getElementById("enterBtn").style.display="block";
-}
-}
+}}
 typeIntro();
 
-/* MUSIC (FIXED) */
-const music = document.getElementById("music");
+/* MUSIC FIXED */
+const music=document.getElementById("music");
 
 function startApp(){
-music.volume = 0;
-music.loop = true;
+music.volume=0;
+music.loop=true;
 music.play();
 
-let fade = setInterval(()=>{
-if(music.volume < 0.6){
-music.volume += 0.05;
-}else{
-clearInterval(fade);
-}
+let fade=setInterval(()=>{
+if(music.volume<0.6){music.volume+=0.05;}
+else{clearInterval(fade);}
 },200);
 
 document.getElementById("intro").style.display="none";
@@ -241,7 +251,7 @@ document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 }
 
-/* POPUP */
+/* POPUP (NO ALERT) */
 function showMessage(text){
 const msg=document.createElement("div");
 msg.innerText=text;
@@ -255,29 +265,93 @@ msg.style.padding="20px";
 msg.style.borderRadius="20px";
 msg.style.zIndex="9999";
 document.body.appendChild(msg);
-setTimeout(()=>msg.remove(),2000);
+setTimeout(()=>msg.remove(),2500);
 }
+
+/* REASONS */
+let reasons=[...document.querySelectorAll("#reasonText")].length?[]:[
+"I love your smile","I love your laugh","I love your kindness",
+"I love how you make me happy everytime just by existing",
+"I love your beautiful eyes which pierces through my heart",
+"I love your voice which is a blessing to my ears",
+"I love spending time with you even if it's the last few seconds on earth",
+"I love everything about you My Sayangku ❤️"
+];
+let usedReasons=[];
+function newReason(){
+if(usedReasons.length===reasons.length){
+document.getElementById("reasonText").innerText="These are not all of the reasons... ❤️";return;}
+let i;
+do{i=Math.floor(Math.random()*reasons.length);}while(usedReasons.includes(i));
+usedReasons.push(i);
+document.getElementById("reasonText").innerText=reasons[i];
+}
+
+/* MEMORY GAME (UNCHANGED) */
+const images=[
+"images/img1.jpeg","images/img2.jpeg","images/img3.jpeg",
+"images/img4.jpeg","images/img5.jpeg","images/img6.jpeg"
+];
+
+let cards=[],flipped=[],matches=0;
+
+function startMemoryGame(){
+const board=document.getElementById("memoryBoard");
+board.innerHTML="";
+cards=[...images,...images].sort(()=>0.5-Math.random());
+matches=0;flipped=[];
+
+cards.forEach(img=>{
+const card=document.createElement("div");
+card.className="card";
+const image=document.createElement("img");
+image.src=img;
+card.appendChild(image);
+card.onclick=()=>flipCard(card,img);
+board.appendChild(card);
+});
+}
+
+function flipCard(card,img){
+if(card.classList.contains("flipped")||flipped.length===2)return;
+card.classList.add("flipped");
+flipped.push({card,img});
+
+if(flipped.length===2){
+if(flipped[0].img===flipped[1].img){
+matches++;flipped=[];
+if(matches===6){
+document.getElementById("memoryMessage").innerText="You matched it yayyyyy ❤️";
+}
+}else{
+setTimeout(()=>{
+flipped[0].card.classList.remove("flipped");
+flipped[1].card.classList.remove("flipped");
+flipped=[];
+},800);
+}}}
+startMemoryGame();
+
+/* HEART GAME */
+let score=0;
+function addPoint(){score++;document.getElementById("score").innerText=score;}
 
 /* GIFT */
 function loveExplosion(){
-showMessage("You are my everything ❤️");
+showMessage("You are the best thing to ever happen in my life and I can never be more thankful ❤️");
 }
 
 /* FOREVER */
 function answerYes(){
-showMessage("Forever starts now ❤️");
+showMessage("THALAAL ❤️ AMIRA forever!");
 }
 
-/* SIMPLE HEARTS (NO AUDIO BUGS) */
-setInterval(()=>{
-const h=document.createElement("div");
-h.className="heart";
-h.innerText="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.bottom="0";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),6000);
-},500);
+/* MOVE NO */
+function moveNo(btn){
+btn.style.position="absolute";
+btn.style.left=Math.random()*200+"px";
+btn.style.top=Math.random()*200+"px";
+}
 
 /* TIMER */
 const diff=Math.floor((new Date()-new Date("2025-12-20"))/(1000*60*60*24));
