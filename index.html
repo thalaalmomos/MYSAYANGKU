@@ -312,9 +312,18 @@ let reasons=[
 "I love everything about you My Sayangku ❤️"
 ];
 
+let reasonIndex = 0;
+
 function newReason(){
-document.getElementById("reasonText").innerText=
-reasons[Math.floor(Math.random()*reasons.length)];
+
+document.getElementById("reasonText").innerText = reasons[reasonIndex];
+
+reasonIndex++;
+
+if(reasonIndex >= reasons.length){
+reasonIndex = 0;
+}
+
 }
 
 /* HEART GAME */
