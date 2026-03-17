@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -182,7 +181,6 @@ display:none;
 .card.flipped img{
 display:block;
 }
-
 </style>
 </head>
 
@@ -193,7 +191,8 @@ display:block;
 <button id="enterBtn" onclick="startApp()">Here's a little surprise to My Sayang ❤️</button>
 </div>
 
-<audio id="music" src="music/song1.mp3"controls></audio>></audio>
+<!-- FIXED AUDIO -->
+<audio id="music" src="music/song1.mp3"></audio>
 
 <div class="app">
 
@@ -248,7 +247,6 @@ display:block;
 <script>
 
 /* INTRO */
-
 const introMessage="Sayangku I have made something special for you ❤️";
 let i=0;
 
@@ -264,7 +262,6 @@ document.getElementById("enterBtn").style.display="block";
 typeIntro();
 
 /* AUDIO SETUP */
-
 const music = document.getElementById("music");
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const analyser = audioContext.createAnalyser();
@@ -276,210 +273,63 @@ analyser.connect(audioContext.destination);
 analyser.fftSize=256;
 const dataArray=new Uint8Array(analyser.frequencyBinCount);
 
-/* START APP + MUSIC */
-
+/* START APP */
 function startApp(){
 
 audioContext.resume();
 
 music.volume = 0;
+music.loop = true;
 music.play();
 
 let fade = setInterval(()=>{
-
 if(music.volume < 0.6){
 music.volume += 0.05;
 }else{
 clearInterval(fade);
 }
-
 },200);
 
 document.getElementById("intro").style.display="none";
-
 }
 
 /* NAV */
-
 function show(id){
 document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 }
 
-/* REASONS */
-
-let reasons=[
-"I love your smile",
-"I love your laugh",
-"I love your kindness",
-"I love how you make me happy everytime just by existing",
-"I love your beautiful eyes which pierces through my heart",
-"I love your voice which is a blessing to my ears",
-"I love spending time with you even if it's the last few seconds on earth",
-"I love everything about you My Sayangku ❤️"
-];
-
-let usedReasons=[];
-
-function newReason(){
-
-if(usedReasons.length===reasons.length){
-document.getElementById("reasonText").innerText="These are not all of the reasons... I could list thousands more ❤️";
-return;
-}
-
-let index;
-
-do{
-index=Math.floor(Math.random()*reasons.length);
-}while(usedReasons.includes(index));
-
-usedReasons.push(index);
-
-document.getElementById("reasonText").innerText=reasons[index];
-}
-
-/* HEARTS */
-
-function createHeart(){
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerText="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.bottom="0";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),6000);
-}
-
-setInterval(createHeart,600);
-
-function animateHearts(){
-
-analyser.getByteFrequencyData(dataArray);
-let volume=dataArray.reduce((a,b)=>a+b)/dataArray.length;
-
-document.querySelectorAll(".heart").forEach(h=>{
-let scale=1+volume/200;
-h.style.transform=`translateY(-${volume/5}px) scale(${scale})`;
-});
-
-requestAnimationFrame(animateHearts);
-
-}
-
-animateHearts();
-
-/* MEMORY GAME */
-
-const images=[
-"images/img1.jpeg",
-"images/img2.jpeg",
-"images/img3.jpeg",
-"images/img4.jpeg",
-"images/img5.jpeg",
-"images/img6.jpeg"
-];
-
-let cards=[];
-let flipped=[];
-let matches=0;
-
-function startMemoryGame(){
-
-const board=document.getElementById("memoryBoard");
-board.innerHTML="";
-document.getElementById("memoryMessage").innerText="";
-
-cards=[...images,...images];
-cards.sort(()=>0.5-Math.random());
-
-matches=0;
-flipped=[];
-
-cards.forEach(img=>{
-
-const card=document.createElement("div");
-card.className="card";
-
-const image=document.createElement("img");
-image.src=img;
-
-card.appendChild(image);
-
-card.addEventListener("click",()=>flipCard(card,img));
-
-board.appendChild(card);
-
-});
-
-}
-
-function flipCard(card,img){
-
-if(card.classList.contains("flipped")||flipped.length===2) return;
-
-card.classList.add("flipped");
-flipped.push({card,img});
-
-if(flipped.length===2){
-
-if(flipped[0].img===flipped[1].img){
-
-matches++;
-flipped=[];
-
-if(matches===6){
-document.getElementById("memoryMessage").innerText="You matched it yayyyyy ❤️";
-}
-
-}else{
-
-setTimeout(()=>{
-flipped[0].card.classList.remove("flipped");
-flipped[1].card.classList.remove("flipped");
-flipped=[];
-},800);
-
-}
-
-}
-
-}
-
-startMemoryGame();
-
-/* HEART GAME */
-
-let score=0;
-
-function addPoint(){
-score++;
-document.getElementById("score").innerText=score;
+/* POPUP MESSAGE */
+function showMessage(text){
+const msg = document.createElement("div");
+msg.innerText = text;
+msg.style.position="fixed";
+msg.style.top="50%";
+msg.style.left="50%";
+msg.style.transform="translate(-50%, -50%)";
+msg.style.background="#ff4d6d";
+msg.style.color="white";
+msg.style.padding="20px 30px";
+msg.style.borderRadius="20px";
+msg.style.fontSize="18px";
+msg.style.zIndex="9999";
+msg.style.boxShadow="0 10px 30px rgba(0,0,0,0.3)";
+msg.style.textAlign="center";
+document.body.appendChild(msg);
+setTimeout(()=> msg.remove(),2500);
 }
 
 /* GIFT */
-
 function loveExplosion(){
-alert("You are the best thing to ever happen in my life and I can never be more thankful ❤️");
+showMessage("You are the best thing to ever happen in my life ❤️");
 }
 
 /* FOREVER */
-
 function answerYes(){
-alert("THALAAL ❤️ AMIRA forever!");
-}
-
-function moveNo(btn){
-const app=document.querySelector(".app");
-const maxX=app.clientWidth-btn.offsetWidth-20;
-const maxY=app.clientHeight-btn.offsetHeight-20;
-btn.style.position="absolute";
-btn.style.left=Math.random()*maxX+"px";
-btn.style.top=Math.random()*maxY+"px";
+showMessage("THALAAL ❤️ AMIRA forever!");
 }
 
 /* TIMER */
-
 const startDate=new Date("2025-12-20");
 const today=new Date();
 const diff=Math.floor((today-startDate)/(1000*60*60*24));
