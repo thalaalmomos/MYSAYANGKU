@@ -303,8 +303,11 @@ flipped=[];
 startMemoryGame();
 
 /* REASONS */
-let reasons=[
-"I love your smile","I love your laugh","I love your kindness",
+
+let reasons = [
+"I love your smile",
+"I love your laugh",
+"I love your kindness",
 "I love how you make me happy everytime just by existing",
 "I love your beautiful eyes which pierces through my heart",
 "I love your voice which is a blessing to my ears",
@@ -319,8 +322,7 @@ function newReason(){
 if(reasonIndex >= reasons.length){
     document.getElementById("reasonText").innerText =
     "These are not all of the reasons... I could list thousands more ❤️";
-
-    return; // 🔥 THIS stops everything completely
+    return;
 }
 
 document.getElementById("reasonText").innerText = reasons[reasonIndex];
