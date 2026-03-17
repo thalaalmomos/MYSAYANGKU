@@ -193,7 +193,7 @@ display:block;
 <button id="enterBtn" onclick="startApp()">Here's a little surprise to My Sayang ❤️</button>
 </div>
 
-<audio id="music" src="music/song1.mp3" controls></audio>
+<audio id="music" src="music/song1.mp3"></audio>
 
 <div class="app">
 
@@ -263,8 +263,40 @@ document.getElementById("enterBtn").style.display="block";
 }
 typeIntro();
 
+/* AUDIO SETUP */
+
+const music = document.getElementById("music");
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const analyser = audioContext.createAnalyser();
+const source = audioContext.createMediaElementSource(music);
+
+source.connect(analyser);
+analyser.connect(audioContext.destination);
+
+analyser.fftSize=256;
+const dataArray=new Uint8Array(analyser.frequencyBinCount);
+
+/* START APP + MUSIC */
+
 function startApp(){
+
+audioContext.resume();
+
+music.volume = 0;
+music.play();
+
+let fade = setInterval(()=>{
+
+if(music.volume < 0.6){
+music.volume += 0.05;
+}else{
+clearInterval(fade);
+}
+
+},200);
+
 document.getElementById("intro").style.display="none";
+
 }
 
 /* NAV */
@@ -307,41 +339,7 @@ usedReasons.push(index);
 document.getElementById("reasonText").innerText=reasons[index];
 }
 
-/* SINGLE SONG PLAYER */
-
-const music = document.getElementById("music");
-
-function startMusic(){
-
-music.volume = 0;
-
-music.play().catch(()=>{});
-
-let fade = setInterval(()=>{
-
-if(music.volume < 0.6){
-music.volume += 0.05;
-}else{
-clearInterval(fade);
-}
-
-},200);
-
-}
-
-document.addEventListener("click", startMusic, { once:true });
-
-/* MUSIC REACTIVE HEARTS */
-
-const audioContext=new (window.AudioContext||window.webkitAudioContext)();
-const analyser=audioContext.createAnalyser();
-const source=audioContext.createMediaElementSource(music);
-
-source.connect(analyser);
-analyser.connect(audioContext.destination);
-
-analyser.fftSize=256;
-const dataArray=new Uint8Array(analyser.frequencyBinCount);
+/* HEARTS */
 
 function createHeart(){
 const heart=document.createElement("div");
@@ -356,6 +354,7 @@ setTimeout(()=>heart.remove(),6000);
 setInterval(createHeart,600);
 
 function animateHearts(){
+
 analyser.getByteFrequencyData(dataArray);
 let volume=dataArray.reduce((a,b)=>a+b)/dataArray.length;
 
@@ -365,6 +364,7 @@ h.style.transform=`translateY(-${volume/5}px) scale(${scale})`;
 });
 
 requestAnimationFrame(animateHearts);
+
 }
 
 animateHearts();
@@ -448,7 +448,7 @@ flipped=[];
 
 startMemoryGame();
 
-/* HEART CLICK GAME */
+/* HEART GAME */
 
 let score=0;
 
@@ -486,5 +486,6 @@ const diff=Math.floor((today-startDate)/(1000*60*60*24));
 document.getElementById("days").innerText=diff+" days ❤️";
 
 </script>
+
 </body>
 </html>
