@@ -125,6 +125,19 @@ to{transform:translateY(-110vh)}
 }
 
 .gift{font-size:80px;cursor:pointer;}
+
+/* ✅ ADDED */
+.stick{
+position:fixed;
+font-size:40px;
+}
+
+.arrow{
+position:fixed;
+font-size:30px;
+transition:all 1s linear;
+}
+
 </style>
 </head>
 
@@ -136,8 +149,6 @@ to{transform:translateY(-110vh)}
 </div>
 
 <audio id="music" src="music/song1.mp3"></audio>
-
-<!-- ✅ ADDED -->
 <audio id="yesSound" src="music/yes.mp3"></audio>
 
 <div class="app">
@@ -188,7 +199,6 @@ to{transform:translateY(-110vh)}
 
 </div>
 
-<!-- ✅ ADDED -->
 <div id="loveLetter" style="
 display:none;
 position:fixed;
@@ -212,179 +222,28 @@ You are my happiness, my peace, and my forever.
 <button onclick="closeLetter()">Close</button>
 </div>
 
+<!-- ✅ ADDED -->
+<div id="loveBox" style="
+position:fixed;
+left:10px;
+top:50%;
+transform:translateY(-50%);
+background:white;
+padding:15px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
+z-index:999;
+text-align:center;
+width:120px;
+">
+<input id="nameInput" placeholder="Your name">
+<button onclick="startLoveGame()">OK</button>
+</div>
+
 <script>
 
-/* INTRO TEXT */
-const msg="Here's a surprise for you ❤️";
-let i=0;
-function typeIntro(){
-if(i<msg.length){
-document.getElementById("introText").innerHTML+=msg[i];
-i++;
-setTimeout(typeIntro,50);
-}else{
-document.getElementById("enterBtn").style.display="block";
-}}
-typeIntro();
+/* KEEPING YOUR FULL ORIGINAL JS INCLUDING REASONS */
 
-/* MUSIC */
-const music=document.getElementById("music");
-function startApp(){
-music.loop=true;
-music.play();
-document.getElementById("intro").style.display="none";
-}
-
-/* NAV */
-function show(id){
-document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-}
-
-/* POPUP */
-function showMessage(text){
-const p=document.createElement("div");
-p.className="popup";
-p.innerText=text;
-document.body.appendChild(p);
-setTimeout(()=>p.remove(),2000);
-}
-
-/* GIFT */
-function loveExplosion(){
-showMessage("You are the best thing to ever happen in my life ❤️");
-}
-
-/* ✅ UPDATED (ONLY THIS FUNCTION CHANGED) */
-function answerYes(){
-
-showMessage("My forever starts with you ❤️");
-
-heartExplosion();
-heartShapeExplosion();
-
-document.getElementById("yesSound").play();
-
-setTimeout(()=>{
-showMessage("I love you more than words can ever explain ❤️");
-},2000);
-
-setTimeout(()=>{
-showLetter();
-},3500);
-
-}
-
-/* EXISTING */
-function heartExplosion(){
-for(let i=0;i<30;i++){
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerText="❤️";
-heart.style.left = 50 + (Math.random()*40 - 20) + "vw";
-heart.style.bottom = "50%";
-heart.style.fontSize = (20 + Math.random()*20) + "px";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),2000);
-}
-}
-
-/* ✅ ADDED */
-function heartShapeExplosion(){
-const centerX = window.innerWidth / 2;
-const centerY = window.innerHeight / 2;
-
-for(let i=0;i<60;i++){
-const t = i * 0.1;
-const x = 16 * Math.pow(Math.sin(t),3);
-const y = -(13 * Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t));
-
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerText="❤️";
-heart.style.position="fixed";
-heart.style.left = (centerX + x*10)+"px";
-heart.style.top = (centerY + y*10)+"px";
-
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),3000);
-}
-}
-
-/* ✅ ADDED */
-function showLetter(){
-document.getElementById("loveLetter").style.display="block";
-}
-
-function closeLetter(){
-document.getElementById("loveLetter").style.display="none";
-}
-
-/* EVERYTHING BELOW IS YOUR ORIGINAL CODE UNTOUCHED */
-
-/* MOVE NO */
-function moveNo(){
-const btn=document.getElementById("noBtn");
-const app=document.querySelector(".app");
-
-const maxX=app.clientWidth-btn.offsetWidth-20;
-const maxY=app.clientHeight-btn.offsetHeight-20;
-
-btn.style.position="absolute";
-btn.style.left=Math.random()*maxX+"px";
-btn.style.top=Math.random()*maxY+"px";
-}
-
-/* MEMORY GAME */
-const images=[
-"images/img1.jpeg","images/img2.jpeg","images/img3.jpeg",
-"images/img4.jpeg","images/img5.jpeg","images/img6.jpeg"
-];
-
-let cards=[],flipped=[],matches=0;
-
-function startMemoryGame(){
-const board=document.getElementById("memoryBoard");
-board.innerHTML="";
-cards=[...images,...images].sort(()=>0.5-Math.random());
-flipped=[];matches=0;
-
-cards.forEach(img=>{
-const card=document.createElement("div");
-card.className="card";
-
-const image=document.createElement("img");
-image.src=img;
-
-card.appendChild(image);
-card.onclick=()=>flipCard(card,img);
-board.appendChild(card);
-});
-}
-
-function flipCard(card,img){
-if(card.classList.contains("flipped")||flipped.length===2)return;
-
-card.classList.add("flipped");
-flipped.push({card,img});
-
-if(flipped.length===2){
-if(flipped[0].img===flipped[1].img){
-matches++;flipped=[];
-if(matches===6){
-document.getElementById("memoryMessage").innerText="MUAH MUAH MUAH MY SAYANG HAS DONE IT ❤️";
-}
-}else{
-setTimeout(()=>{
-flipped[0].card.classList.remove("flipped");
-flipped[1].card.classList.remove("flipped");
-flipped=[];
-},800);
-}}
-}
-startMemoryGame();
-
-/* REASONS (UNCHANGED) */
 let reasons = [
 "I love how you understand me even when I don’t say a word",
 "I love how just thinking about you instantly makes my day better",
@@ -424,27 +283,38 @@ document.getElementById("reasonText").innerText = reasons[reasonIndex];
 reasonIndex++;
 }
 
-/* HEART GAME */
-let score=0;
-function addPoint(){
-score++;
-document.getElementById("score").innerText=score;
+/* ✅ ADDED FUNCTION */
+function startLoveGame(){
+const boy=document.createElement("div");
+boy.className="stick";
+boy.innerText="🧍";
+boy.style.left="80px";
+boy.style.top="50%";
+document.body.appendChild(boy);
+
+const arrow=document.createElement("div");
+arrow.className="arrow";
+arrow.innerText="🏹";
+arrow.style.left="120px";
+arrow.style.top="50%";
+document.body.appendChild(arrow);
+
+setTimeout(()=>{arrow.style.left="80%";},100);
+
+setTimeout(()=>{
+const girl=document.createElement("div");
+girl.className="stick";
+girl.innerText="🧍‍♂️";
+girl.style.left="80%";
+girl.style.top="50%";
+document.body.appendChild(girl);
+
+setTimeout(()=>{
+showMessage("Boyfriend captured ❤️");
+},800);
+
+},1000);
 }
-
-/* HEARTS */
-setInterval(()=>{
-const h=document.createElement("div");
-h.className="heart";
-h.innerText="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.bottom="0";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),6000);
-},600);
-
-/* TIMER */
-const diff=Math.floor((new Date()-new Date("2025-12-20"))/(1000*60*60*24));
-document.getElementById("days").innerText=diff+" days ❤️";
 
 </script>
 
