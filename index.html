@@ -137,6 +137,9 @@ to{transform:translateY(-110vh)}
 
 <audio id="music" src="music/song1.mp3"></audio>
 
+<!-- ✅ ADDED -->
+<audio id="yesSound" src="music/yes.mp3"></audio>
+
 <div class="app">
 
 <h1>THALAAL ❤️ AMIRA</h1>
@@ -185,6 +188,30 @@ to{transform:translateY(-110vh)}
 
 </div>
 
+<!-- ✅ ADDED -->
+<div id="loveLetter" style="
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:25px;
+border-radius:20px;
+width:300px;
+text-align:center;
+z-index:9999;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+">
+<p style="color:#ff4d6d;">
+My love ❤️  
+Every moment with you feels like a dream I never want to wake up from.  
+You are my happiness, my peace, and my forever.
+</p>
+<br>
+<button onclick="closeLetter()">Close</button>
+</div>
+
 <script>
 
 /* INTRO TEXT */
@@ -228,39 +255,72 @@ function loveExplosion(){
 showMessage("You are the best thing to ever happen in my life ❤️");
 }
 
-/* 🔥 UPDATED ONLY THIS FUNCTION */
+/* ✅ UPDATED (ONLY THIS FUNCTION CHANGED) */
 function answerYes(){
 
 showMessage("My forever starts with you ❤️");
 
 heartExplosion();
+heartShapeExplosion();
+
+document.getElementById("yesSound").play();
 
 setTimeout(()=>{
 showMessage("I love you more than words can ever explain ❤️");
 },2000);
 
+setTimeout(()=>{
+showLetter();
+},3500);
+
 }
 
-/* 💥 ADDED FUNCTION ONLY */
+/* EXISTING */
 function heartExplosion(){
-
 for(let i=0;i<30;i++){
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerText="❤️";
+heart.style.left = 50 + (Math.random()*40 - 20) + "vw";
+heart.style.bottom = "50%";
+heart.style.fontSize = (20 + Math.random()*20) + "px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),2000);
+}
+}
+
+/* ✅ ADDED */
+function heartShapeExplosion(){
+const centerX = window.innerWidth / 2;
+const centerY = window.innerHeight / 2;
+
+for(let i=0;i<60;i++){
+const t = i * 0.1;
+const x = 16 * Math.pow(Math.sin(t),3);
+const y = -(13 * Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t));
 
 const heart=document.createElement("div");
 heart.className="heart";
 heart.innerText="❤️";
-
-heart.style.left = 50 + (Math.random()*40 - 20) + "vw";
-heart.style.bottom = "50%";
-heart.style.fontSize = (20 + Math.random()*20) + "px";
+heart.style.position="fixed";
+heart.style.left = (centerX + x*10)+"px";
+heart.style.top = (centerY + y*10)+"px";
 
 document.body.appendChild(heart);
-
-setTimeout(()=>heart.remove(),2000);
-
+setTimeout(()=>heart.remove(),3000);
+}
 }
 
+/* ✅ ADDED */
+function showLetter(){
+document.getElementById("loveLetter").style.display="block";
 }
+
+function closeLetter(){
+document.getElementById("loveLetter").style.display="none";
+}
+
+/* EVERYTHING BELOW IS YOUR ORIGINAL CODE UNTOUCHED */
 
 /* MOVE NO */
 function moveNo(){
@@ -324,7 +384,7 @@ flipped=[];
 }
 startMemoryGame();
 
-/* REASONS */
+/* REASONS (UNCHANGED) */
 let reasons = [
 "I love how you understand me even when I don’t say a word",
 "I love how just thinking about you instantly makes my day better",
