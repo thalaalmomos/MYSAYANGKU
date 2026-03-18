@@ -137,7 +137,7 @@ to{transform:translateY(-110vh)}
 
 <audio id="music" src="music/song1.mp3"></audio>
 
-<!-- ✅ ADDED -->
+
 <audio id="yesSound" src="music/yes.mp3"></audio>
 
 <div class="app">
@@ -188,7 +188,7 @@ to{transform:translateY(-110vh)}
 
 </div>
 
-<!-- ✅ ADDED -->
+
 <div id="loveLetter" style="
 display:none;
 position:fixed;
@@ -204,7 +204,7 @@ z-index:9999;
 box-shadow:0 10px 30px rgba(0,0,0,0.3);
 ">
 <p style="color:#ff4d6d;">
-My love Amira ❤️  
+My love, My Peace, My Sayangku ❤️  
 Being with you feels like a dream I never want to wake up from.  
 You make my days brighter and my heart so full.  
 
@@ -240,7 +240,7 @@ music.play();
 document.getElementById("intro").style.display="none";
 }
 
-/* NAV */
+
 function show(id){
 document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
@@ -260,7 +260,7 @@ function loveExplosion(){
 showMessage("You are the best thing to ever happen in my life ❤️");
 }
 
-/* ✅ UPDATED (ONLY THIS FUNCTION CHANGED) */
+
 function answerYes(){
 
 showMessage("My forever starts with you ❤️");
@@ -280,7 +280,7 @@ showLetter();
 
 }
 
-/* EXISTING */
+
 function heartExplosion(){
 for(let i=0;i<30;i++){
 const heart=document.createElement("div");
@@ -294,7 +294,7 @@ setTimeout(()=>heart.remove(),5000);
 }
 }
 
-/* ✅ ADDED */
+
 function heartShapeExplosion(){
 const centerX = window.innerWidth / 2;
 const centerY = window.innerHeight / 2;
@@ -316,7 +316,7 @@ setTimeout(()=>heart.remove(),3000);
 }
 }
 
-/* ✅ ADDED */
+
 function showLetter(){
 document.getElementById("loveLetter").style.display="block";
 }
@@ -325,7 +325,6 @@ function closeLetter(){
 document.getElementById("loveLetter").style.display="none";
 }
 
-/* EVERYTHING BELOW IS YOUR ORIGINAL CODE UNTOUCHED */
 
 /* MOVE NO */
 function moveNo(){
@@ -389,7 +388,7 @@ flipped=[];
 }
 startMemoryGame();
 
-/* REASONS (UNCHANGED) */
+
 let reasons = [
 "I love how you understand me even when I don’t say a word",
 "I love how just thinking about you instantly makes my day better",
