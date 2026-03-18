@@ -20,7 +20,6 @@ overflow:hidden;
 position:relative;
 }
 
-/* INTRO SCREEN */
 #intro{
 position:absolute;
 width:100%;
@@ -47,7 +46,6 @@ cursor:pointer;
 display:none;
 }
 
-/* APP */
 .app{
 width:380px;
 background:rgba(255,255,255,0.9);
@@ -57,11 +55,10 @@ text-align:center;
 position:relative;
 }
 
-/* BUTTONS FIXED */
 .tabs{
 display:flex;
 flex-wrap:wrap;
-gap:10px; /* 🔥 spacing fix */
+gap:10px;
 justify-content:center;
 margin-top:10px;
 }
@@ -75,11 +72,9 @@ border-radius:20px;
 cursor:pointer;
 }
 
-/* SECTIONS */
 .section{display:none;margin-top:20px;}
 .active{display:block;}
 
-/* MEMORY GAME */
 #memoryBoard{
 width:320px;
 margin:20px auto;
@@ -100,13 +95,12 @@ cursor:pointer;
 .card img{
 width:100%;
 height:100%;
-object-fit:cover; /* 🔥 FIXED STRETCH */
+object-fit:cover;
 display:none;
 }
 
 .card.flipped img{display:block;}
 
-/* POPUP */
 .popup{
 position:fixed;
 top:50%;
@@ -119,7 +113,6 @@ border-radius:20px;
 z-index:9999;
 }
 
-/* HEARTS */
 .heart{
 position:absolute;
 font-size:24px;
@@ -235,9 +228,38 @@ function loveExplosion(){
 showMessage("You are the best thing to ever happen in my life ❤️");
 }
 
-/* FOREVER */
+/* 🔥 UPDATED ONLY THIS FUNCTION */
 function answerYes(){
-showMessage("THALAAL ❤️ AMIRA forever!");
+
+showMessage("My forever starts with you ❤️");
+
+heartExplosion();
+
+setTimeout(()=>{
+showMessage("I love you more than words can ever explain ❤️");
+},2000);
+
+}
+
+/* 💥 ADDED FUNCTION ONLY */
+function heartExplosion(){
+
+for(let i=0;i<30;i++){
+
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerText="❤️";
+
+heart.style.left = 50 + (Math.random()*40 - 20) + "vw";
+heart.style.bottom = "50%";
+heart.style.fontSize = (20 + Math.random()*20) + "px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),2000);
+
+}
+
 }
 
 /* MOVE NO */
@@ -290,7 +312,7 @@ if(flipped.length===2){
 if(flipped[0].img===flipped[1].img){
 matches++;flipped=[];
 if(matches===6){
-document.getElementById("memoryMessage").innerText="You matched it yayyyyy ❤️";
+document.getElementById("memoryMessage").innerText="MUAH MUAH MUAH MY SAYANG HAS DONE IT ❤️";
 }
 }else{
 setTimeout(()=>{
@@ -303,36 +325,44 @@ flipped=[];
 startMemoryGame();
 
 /* REASONS */
-
 let reasons = [
-"I love your smile",
-"I love your laugh",
-"I love your kindness",
-"I love how you make me happy everytime just by existing",
-"I love your beautiful eyes which pierces through my heart",
-"I love your voice which is a blessing to my ears",
-"I love spending time with you even if it's the last few seconds on earth",
-"I love everything about you My Sayangku ❤️"
+"I love how you understand me even when I don’t say a word",
+"I love how just thinking about you instantly makes my day better",
+"I love the way you care about the smallest things and make them feel important",
+"I love how your presence alone brings me so much peace",
+"I love how you make even ordinary moments feel special and unforgettable",
+"I love how your happiness means everything to me",
+"I love how you support me and believe in me no matter what",
+"I love how your smile can light up even my darkest days",
+"I love how talking to you never feels enough, I always want more time with you",
+"I love how you make me feel safe, loved, and understood all at once",
+"I love how every memory with you becomes something I cherish deeply",
+"I love how you’ve become the most important part of my life without me even realizing it",
+"I love how you make me want to be a better person every single day",
+"I love how your voice calms me and makes everything feel okay",
+"I love how being with you feels like home no matter where we are",
+"I love how you make my heart feel full in a way I can’t even explain",
+"I love how every little thing about you is perfect to me",
+"I love how you’ve changed my life just by being in it",
+"I love how I can be completely myself when I’m with you",
+"I love how loving you feels so natural and effortless",
+"I love how even the thought of you makes me smile without realizing",
+"I love how you make my world feel brighter and happier every day",
+"I love how every second with you feels like a beautiful moment I never want to lose",
+"I love how you are not just my love, but also my best friend"
 ];
 
 let reasonIndex = 0;
 
 function newReason(){
-
 if(reasonIndex >= reasons.length){
-    document.getElementById("reasonText").innerText =
-    "These are not all of the reasons... I could list thousands more ❤️";
-    return;
+document.getElementById("reasonText").innerText =
+"These are not all of the reasons... I could list thousands more ❤️";
+return;
 }
-
 document.getElementById("reasonText").innerText = reasons[reasonIndex];
-
 reasonIndex++;
-
 }
-
-
-
 
 /* HEART GAME */
 let score=0;
